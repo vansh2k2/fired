@@ -38,11 +38,14 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const navLinks = [
+  const leftNavLinks = [
     { name: "Home", href: "/" },
     { name: "Collections", href: "/collections" },
     { name: "Projects", href: "/projects" },
     { name: "Departments", href: "/departments" },
+  ]
+
+  const rightNavLinks = [
     { name: "Company", href: "/company" },
     { name: "Downloads", href: "/downloads" },
     { name: "Contact", href: "/contact" },
@@ -54,103 +57,135 @@ export function Navbar() {
         className={cn(
           "fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out",
           isHome && !isScrolled
-            ? "bg-transparent py-8 translate-y-0"
-            : "bg-white/95 backdrop-blur-md py-2 border-b border-black/5 shadow-sm translate-y-0",
+            ? "bg-transparent py-6"
+            : "bg-white/95 backdrop-blur-md py-3 border-b border-black/5 shadow-sm",
         )}
-        style={{
-          transform: isScrolled ? 'translateY(0)' : 'translateY(0)',
-          animation: isScrolled ? 'slideDown 0.5s ease-out' : 'none'
-        }}
       >
-        <div className="container mx-auto px-6 flex items-center justify-between">
-          <Link
-            href="/"
-            className={cn(
-              "transition-all duration-500 hover:opacity-80 mr-16",
-            )}
-          >
-            {isHome && !isScrolled ? (
-              <div className="flex flex-col items-start">
-                <span 
-                  className="text-2xl font-bold tracking-tight text-white"
-                  style={{ fontFamily: "'Inter', sans-serif", letterSpacing: '0.02em' }}
-                >
-                  FIREDCLAY
-                </span>
-                <span 
-                  className="text-[11px] font-light tracking-[0.3em] text-white/70 -mt-1"
+        <div className="container mx-auto px-6">
+          <div className="flex items-center justify-center gap-4">
+            {/* Left Navigation Links - Fixed width container */}
+            <div className="hidden lg:flex items-center space-x-6 w-[450px] justify-end">
+              {leftNavLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={cn(
+                    "text-[13px] uppercase tracking-[0.15em] font-medium transition-all duration-300 relative group whitespace-nowrap",
+                    isHome && !isScrolled ? "text-white/95 hover:text-white" : "text-black/75 hover:text-black",
+                  )}
                   style={{ fontFamily: "'Inter', sans-serif" }}
                 >
-                  ORIGINALS
-                </span>
-              </div>
-            ) : (
-              <img 
-                src="/logo.png" 
-                alt="Firedclay Originals" 
-                className="h-20 w-auto object-contain"
-              />
-            )}
-          </Link>
+                  {link.name}
+                  <span className={cn(
+                    "absolute bottom-0 left-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full",
+                    isHome && !isScrolled ? "bg-white" : "bg-black"
+                  )} />
+                </Link>
+              ))}
+            </div>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center space-x-7 mr-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={cn(
-                  "text-[13px] uppercase tracking-[0.15em] font-medium transition-all duration-300 relative group",
-                  isHome && !isScrolled ? "text-white/95 hover:text-white" : "text-black/75 hover:text-black",
-                )}
-                style={{ fontFamily: "'Inter', sans-serif" }}
-              >
-                {link.name}
-                <span className={cn(
-                  "absolute bottom-0 left-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full",
-                  isHome && !isScrolled ? "bg-white" : "bg-black"
-                )} />
-              </Link>
-            ))}
-          </div>
-
-          <div
-            className={cn(
-              "flex items-center gap-6 transition-colors duration-300",
-              isHome && !isScrolled ? "text-white" : "text-black",
-            )}
-          >
-            <button 
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="hover:opacity-70 transition-opacity"
-            >
-              <Search size={20} />
-            </button>
-            <button onClick={() => setCartOpen(true)} className="relative hover:opacity-70 transition-opacity">
-              <ShoppingBag size={19} />
-              {items.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-primary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                  {items.length}
-                </span>
+            {/* Centered Logo - Fixed width */}
+            <Link
+              href="/"
+              className={cn(
+                "transition-all duration-500 hover:opacity-80 flex-shrink-0",
               )}
-            </button>
-            <Link href="/order-samples">
-              <Button
-                variant="outline"
-                className={cn(
-                  "hidden sm:flex rounded-none uppercase text-[11px] tracking-[0.12em] font-semibold px-6 h-10 transition-all duration-300",
-                  isHome && !isScrolled
-                    ? "border-white/40 text-white hover:bg-white hover:text-black bg-transparent"
-                    : "border-black text-black hover:bg-black hover:text-white bg-transparent",
-                )}
-                style={{ fontFamily: "'Inter', sans-serif" }}
-              >
-                Order Samples
-              </Button>
+            >
+              {isHome && !isScrolled ? (
+                <div className="flex flex-col items-center min-w-[200px]">
+                  <span 
+                    className="text-2xl font-bold tracking-tight text-white"
+                    style={{ fontFamily: "'Inter', sans-serif", letterSpacing: '0.02em' }}
+                  >
+                    FIREDCLAY
+                  </span>
+                  <span 
+                    className="text-[11px] font-light tracking-[0.3em] text-white/70 -mt-1"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                  >
+                    ORIGINALS
+                  </span>
+                </div>
+              ) : (
+                <div className="min-w-[200px] flex justify-center">
+                  <img 
+                    src="/logo.png" 
+                    alt="Firedclay Originals" 
+                    className="h-16 w-auto object-contain"
+                  />
+                </div>
+              )}
             </Link>
-            <button className="lg:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+
+            {/* Right Navigation Links - Fixed width container */}
+            <div className="hidden lg:flex items-center space-x-6 w-[450px]">
+              {rightNavLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={cn(
+                    "text-[13px] uppercase tracking-[0.15em] font-medium transition-all duration-300 relative group whitespace-nowrap",
+                    isHome && !isScrolled ? "text-white/95 hover:text-white" : "text-black/75 hover:text-black",
+                  )}
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {link.name}
+                  <span className={cn(
+                    "absolute bottom-0 left-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full",
+                    isHome && !isScrolled ? "bg-white" : "bg-black"
+                  )} />
+                </Link>
+              ))}
+            </div>
+
+            {/* Right Side Icons - Absolute positioned */}
+            <div
+              className={cn(
+                "flex items-center gap-4 ml-auto transition-colors duration-300",
+                isHome && !isScrolled ? "text-white" : "text-black",
+              )}
+            >
+              <button 
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="hover:opacity-70 transition-opacity"
+                aria-label="Search"
+              >
+                <Search size={20} />
+              </button>
+              <button 
+                onClick={() => setCartOpen(true)} 
+                className="relative hover:opacity-70 transition-opacity"
+                aria-label="Shopping cart"
+              >
+                <ShoppingBag size={19} />
+                {items.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-primary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                    {items.length}
+                  </span>
+                )}
+              </button>
+              <Link href="/order-samples">
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "hidden sm:flex rounded-none uppercase text-[11px] tracking-[0.12em] font-semibold px-6 h-10 transition-all duration-300",
+                    isHome && !isScrolled
+                      ? "border-white/40 text-white hover:bg-white hover:text-black bg-transparent"
+                      : "border-black text-black hover:bg-black hover:text-white bg-transparent",
+                  )}
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  Order Samples
+                </Button>
+              </Link>
+              <button 
+                className="lg:hidden" 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Menu"
+              >
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -172,6 +207,7 @@ export function Navbar() {
               transition={{ delay: 0.2, duration: 0.3 }}
               onClick={() => setIsSearchOpen(false)}
               className="absolute top-8 right-8 text-black/60 hover:text-black transition-colors hover:rotate-90 duration-300"
+              aria-label="Close search"
             >
               <X size={32} />
             </motion.button>
@@ -237,14 +273,14 @@ export function Navbar() {
                   >
                     Menu
                   </span>
-                  <button onClick={() => setIsMobileMenuOpen(false)}>
+                  <button onClick={() => setIsMobileMenuOpen(false)} aria-label="Close menu">
                     <X size={24} />
                   </button>
                 </div>
                 
                 <div className="flex-1 overflow-y-auto py-6">
                   <div className="flex flex-col space-y-1 px-6">
-                    {navLinks.map((link) => (
+                    {[...leftNavLinks, ...rightNavLinks].map((link) => (
                       <Link
                         key={link.name}
                         href={link.href}

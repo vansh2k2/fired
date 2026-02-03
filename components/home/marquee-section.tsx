@@ -6,22 +6,22 @@ export function MarqueeSection() {
   const words = ["ARCHITECTURAL TILES", "FIRED CLAY", "EUROPEAN DESIGN", "NATURAL TEXTURES", "ATELIER CRAFT"]
 
   return (
-    <section className="py-12 bg-background overflow-hidden border-y border-border/30">
+    <section className="py-6 bg-zinc-900 overflow-hidden border-y border-zinc-700">
       <div className="flex whitespace-nowrap">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-          className="flex gap-16 items-center pr-16"
+          transition={{ duration: 40, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          className="flex gap-12 items-center pr-12"
         >
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="flex gap-16 items-center">
-              {words.map((word) => (
-                <span
-                  key={word}
-                  className="text-xl md:text-2xl font-serif tracking-[0.2em] uppercase text-foreground/20"
-                >
-                  {word} <span className="text-primary/40 ml-16">/</span>
-                </span>
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="flex gap-12 items-center">
+              {words.map((word, index) => (
+                <div key={`${word}-${index}`} className="flex items-center gap-12">
+                  <span className="text-lg md:text-xl font-bold tracking-[0.3em] uppercase text-white/90">
+                    {word}
+                  </span>
+                  <span className="text-zinc-500 text-2xl font-light">/</span>
+                </div>
               ))}
             </div>
           ))}

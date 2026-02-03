@@ -1,10 +1,10 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
-import { useState, useEffect } from "react"
+import { ArrowRight } from "lucide-react"
+import { useState } from "react"
 
 const collections = [
   {
@@ -65,231 +65,171 @@ const collections = [
   },
 ]
 
+// Duplicate collections for infinite loop
+const infiniteCollections = [...collections, ...collections, ...collections]
+
 export default function FeaturedCollections() {
-  const [currentIndex, setCurrentIndex] = useState(0)
   const [isHovered, setIsHovered] = useState<number | null>(null)
-  const itemsPerView = 4
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % (collections.length - itemsPerView + 1))
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % (collections.length - itemsPerView + 1))
-  }
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + (collections.length - itemsPerView + 1)) % (collections.length - itemsPerView + 1))
-  }
-
-  const visibleCollections = collections.slice(currentIndex, currentIndex + itemsPerView)
+  const [isPaused, setIsPaused] = useState(false)
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,0,0,0.03),transparent_50%)]" />
-      
-      <div className="container mx-auto px-6 relative">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+    <section className="py-16 bg-white relative overflow-hidden">
+      <div className="container mx-auto px-6 max-w-[1600px]">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-6 border-b border-zinc-200 pb-8">
           <motion.div 
             className="max-w-2xl"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
             <motion.span 
-              className="text-sm uppercase tracking-[0.25em] text-zinc-600 font-semibold mb-3 block"
+              className="inline-block text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-4 border-b border-zinc-900 pb-1.5"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
             >
-              OUR RANGES
+              Featured Collections
             </motion.span>
             <motion.h2 
-              className="text-3xl md:text-4xl font-bold leading-[1.1] text-zinc-900"
-              initial={{ opacity: 0, y: 20 }}
+              className="text-4xl md:text-5xl font-bold text-zinc-900 leading-[1.1] tracking-tight mb-4"
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Curated{" "}
-              <span className="italic font-light text-zinc-500">Masterpieces</span>
+              Architectural <span className="text-zinc-400">Excellence</span>
             </motion.h2>
+            <motion.p
+              className="text-sm text-zinc-600 leading-relaxed"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              Premium ceramic and stone tiles crafted for discerning architects and designers worldwide.
+            </motion.p>
           </motion.div>
           
           <motion.div
-            className="flex items-center gap-4"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <div className="flex gap-2">
-              <button
-                onClick={prevSlide}
-                className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-900 text-zinc-900 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md"
-                aria-label="Previous"
-              >
-                <ChevronLeft size={20} />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-900 text-zinc-900 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md"
-                aria-label="Next"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </div>
-            
             <Link
               href="/collections"
-              className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold pb-2 border-b-2 border-zinc-900 hover:border-zinc-600 transition-all duration-300 text-zinc-900"
+              className="group inline-flex items-center gap-2 px-6 py-3 border border-zinc-900 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300"
             >
-              VIEW ALL
-              <ArrowRight
-                size={14}
-                className="group-hover:translate-x-2 transition-transform duration-300"
-              />
+              <span className="text-[10px] uppercase tracking-[0.25em] font-bold">Explore All</span>
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </motion.div>
         </div>
 
-        <div className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <AnimatePresence mode="wait">
-              {visibleCollections.map((collection, index) => (
-                <motion.div
-                  key={`${collection.name}-${currentIndex + index}`}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ 
-                    duration: 0.5,
-                    delay: index * 0.1,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                  whileHover={{ y: -8 }}
-                  className="group cursor-pointer"
-                  onMouseEnter={() => setIsHovered(currentIndex + index)}
-                  onMouseLeave={() => setIsHovered(null)}
-                >
-                  <div className="relative aspect-[3/4] overflow-hidden mb-4 bg-zinc-100 shadow-lg hover:shadow-2xl transition-all duration-500 rounded-sm">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none" />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 opacity-60 pointer-events-none z-10" 
-                         style={{
-                           backgroundImage: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)',
-                           animation: 'shine 3s infinite'
-                         }} 
-                    />
-                    
-                    <motion.div
-                      className="absolute inset-0"
-                      animate={{ scale: isHovered === currentIndex + index ? 1.1 : 1 }}
-                      transition={{ duration: 0.8, ease: "easeOut" }}
-                    >
-                      <AnimatePresence mode="wait">
-                        {isHovered === currentIndex + index ? (
-                          <motion.div
-                            key="hover"
-                            initial={{ opacity: 0, scale: 1.1 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ duration: 0.6, ease: "easeInOut" }}
-                            className="absolute inset-0"
-                          >
-                            <Image
-                              src={collection.hoverImage}
-                              alt={`${collection.name} detail`}
-                              fill
-                              className="object-cover"
-                            />
-                          </motion.div>
-                        ) : (
-                          <motion.div
-                            key="default"
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 1.1 }}
-                            transition={{ duration: 0.6, ease: "easeInOut" }}
-                            className="absolute inset-0"
-                          >
-                            <Image
-                              src={collection.image}
-                              alt={collection.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                    
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
-                    
-                    <motion.div 
-                      className="absolute top-4 left-4 z-30"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                    >
-                      <span className="inline-block px-3 py-1.5 bg-white/95 backdrop-blur-sm text-zinc-900 text-[11px] uppercase tracking-[0.2em] font-semibold shadow-md">
-                        {collection.tag}
-                      </span>
-                    </motion.div>
-
-                    <motion.div
-                      className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-30"
-                    >
-                      <div className="flex items-center gap-2 text-white">
-                        <span className="text-xs uppercase tracking-wider font-semibold">Explore</span>
-                        <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform duration-300" />
-                      </div>
-                    </motion.div>
-                  </div>
-                  
+        {/* Infinite Marquee Carousel */}
+        <div 
+          className="relative overflow-hidden"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <motion.div
+            className="flex gap-6"
+            animate={{
+              x: isPaused ? undefined : [0, -2400],
+            }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 40,
+                ease: "linear",
+              },
+            }}
+          >
+            {infiniteCollections.map((collection, index) => (
+              <motion.div
+                key={`${collection.name}-${index}`}
+                className="group cursor-pointer flex-shrink-0"
+                style={{ width: '280px' }}
+                onMouseEnter={() => setIsHovered(index)}
+                onMouseLeave={() => setIsHovered(null)}
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Image Container */}
+                <div className="relative aspect-[4/5] overflow-hidden mb-4 bg-zinc-100">
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.4 }}
+                    className="absolute inset-0"
+                    animate={{ 
+                      scale: isHovered === index ? 1.1 : 1
+                    }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
                   >
-                    <h3 className="text-lg font-bold mb-1.5 group-hover:text-zinc-600 transition-colors duration-300 text-zinc-900">
+                    {isHovered === index ? (
+                      <Image
+                        src={collection.hoverImage}
+                        alt={`${collection.name} detail`}
+                        fill
+                        className="object-cover"
+                        sizes="280px"
+                      />
+                    ) : (
+                      <Image
+                        src={collection.image}
+                        alt={collection.name}
+                        fill
+                        className="object-cover"
+                        sizes="280px"
+                      />
+                    )}
+                  </motion.div>
+                  
+                  {/* Dark overlay on hover */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+                  
+                  {/* Tag */}
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="inline-block px-3 py-1.5 bg-white text-zinc-900 text-[8px] uppercase tracking-[0.25em] font-black">
+                      {collection.tag}
+                    </span>
+                  </div>
+
+                  {/* Hover Arrow */}
+                  <motion.div
+                    className="absolute bottom-4 right-4 z-20 opacity-0 group-hover:opacity-100"
+                    initial={{ x: -15, opacity: 0 }}
+                    animate={{ 
+                      x: isHovered === index ? 0 : -15,
+                      opacity: isHovered === index ? 1 : 0
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="w-10 h-10 bg-white flex items-center justify-center">
+                      <ArrowRight size={18} className="text-zinc-900" />
+                    </div>
+                  </motion.div>
+                </div>
+                
+                {/* Text Content */}
+                <div>
+                  <div className="mb-2">
+                    <h3 className="text-lg font-bold text-zinc-900 mb-1.5 tracking-tight group-hover:text-zinc-600 transition-colors duration-300">
                       {collection.name}
                     </h3>
-                    <p className="text-zinc-600 text-sm leading-relaxed">
-                      {collection.description}
-                    </p>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        <div className="flex justify-center gap-2 mt-8">
-          {Array.from({ length: collections.length - itemsPerView + 1 }).map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                idx === currentIndex ? 'w-8 bg-zinc-900' : 'w-1.5 bg-zinc-300 hover:bg-zinc-400'
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
+                    <div className="w-8 h-0.5 bg-zinc-900 group-hover:w-full transition-all duration-500" />
+                  </div>
+                  <p className="text-zinc-600 text-xs leading-relaxed">
+                    {collection.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes shine {
-          0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-          100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-      `}</style>
     </section>
   )
 }

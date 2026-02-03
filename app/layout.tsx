@@ -7,6 +7,8 @@ import "./globals.css"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { CartDrawer } from "@/components/cart-drawer"
+import ContactFloats from "@/components/ui/contact-floats"
+import SocialSidebar from "@/components/ui/social-sidebar"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -76,6 +78,8 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <CartDrawer />
+        <ContactFloats /> 
+        <SocialSidebar />
         <Analytics />
       </body>
     </html>
