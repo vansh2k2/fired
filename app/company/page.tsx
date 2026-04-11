@@ -2,21 +2,25 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { PageHero } from "@/components/ui/page-hero"
 
 export default function CompanyPage() {
   return (
     <div className="pt-20">
-      <section className="py-32 container mx-auto px-6">
+      <PageHero
+        title="Four Decades of Ceramic Innovation"
+        subtitle="Our Heritage"
+        description="Founded in 1984 in the heart of Europe's ceramic district, Firedclay Originals was born from a passion for the raw, tactile beauty of earth and fire."
+        backgroundImage="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1600&q=80"
+        curveColor="var(--background)"
+      />
+
+      <section className="py-24 container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center mb-40">
-          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-            <span className="text-xs uppercase tracking-[0.4em] text-primary font-bold mb-6 block">OUR HERITAGE</span>
-            <h1 className="text-6xl md:text-7xl font-serif leading-tight mb-8">
-              Four Decades of <br /> <span className="italic">Ceramic Innovation</span>
-            </h1>
-            <p className="text-xl font-light text-muted-foreground mb-10 leading-relaxed">
-              Founded in 1984 in the heart of Europe's ceramic district, Firedclay Originals was born from a passion for
-              the raw, tactile beauty of earth and fire.
-            </p>
+          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+            <h2 className="text-4xl font-serif leading-tight mb-8">
+              Bridging the gap between <span className="italic">Industrial capability</span> and artisanal soul.
+            </h2>
             <div className="grid grid-cols-2 gap-12 border-t pt-12 border-border">
               <div>
                 <h4 className="text-3xl font-serif text-primary mb-2">1984</h4>
@@ -32,7 +36,8 @@ export default function CompanyPage() {
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 1 }}
             className="relative aspect-[4/5]"
           >
@@ -40,7 +45,7 @@ export default function CompanyPage() {
               src="/craftsman-making-clay-tiles.jpg"
               alt="Artisanal Production"
               fill
-              className="object-cover grayscale"
+              className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
             />
           </motion.div>
         </div>

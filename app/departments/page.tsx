@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { PageHero } from "@/components/ui/page-hero"
 
 const departments = [
   {
@@ -37,19 +38,15 @@ const departments = [
 export default function DepartmentsPage() {
   return (
     <div className="pt-20">
-      <section className="py-32 container mx-auto px-6">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="max-w-3xl mb-24">
-          <span className="text-xs uppercase tracking-[0.4em] text-primary font-bold mb-6 block">
-            APPLICATION GUIDE
-          </span>
-          <h1 className="text-6xl md:text-7xl font-serif leading-tight mb-8">
-            Curated by <span className="italic">Environment</span>
-          </h1>
-          <p className="text-xl font-light text-muted-foreground leading-relaxed">
-            Every space has its own requirements. We categorize our ranges to help you find the perfect technical and
-            aesthetic match for your project.
-          </p>
-        </motion.div>
+      <PageHero
+        title="Curated by Environment"
+        subtitle="Application Guide"
+        description="Every space has its own requirements. We categorize our ranges to help you find the perfect technical and aesthetic match for your project."
+        backgroundImage="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80"
+        curveColor="var(--background)"
+      />
+
+      <section className="py-24 container mx-auto px-6">
 
         <div className="space-y-40">
           {departments.map((dept, i) => (

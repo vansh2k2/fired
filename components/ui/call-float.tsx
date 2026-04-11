@@ -13,67 +13,6 @@ const CallFloat = () => {
 
   return (
     <>
-      <style>{`
-        @keyframes phonePulse {
-          0%, 100% { 
-            transform: scale(1) rotate(0deg); 
-            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-          }
-          50% { 
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
-          }
-        }
-
-        @keyframes ringWave {
-          0% { 
-            transform: scale(1); 
-            opacity: 1; 
-          }
-          100% { 
-            transform: scale(1.8); 
-            opacity: 0; 
-          }
-        }
-
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        .call-float-container {
-          animation: slideInRight 0.5s ease-out forwards;
-          opacity: 0;
-        }
-
-        .call-float-container.visible {
-          opacity: 1;
-        }
-
-        .call-button {
-          animation: phonePulse 2s ease-in-out infinite;
-        }
-
-        .call-button:hover {
-          animation: phonePulse 1s ease-in-out infinite;
-          background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%) !important;
-        }
-
-        .ring-wave {
-          position: absolute;
-          inset: -1px;
-          border-radius: 50%;
-          border: 2px solid #3b82f6;
-          animation: ringWave 2s linear infinite;
-        }
-      `}</style>
-
       <div className={`call-float-container ${isVisible ? "visible" : ""}`}>
         <a
           href={`tel:${phoneNumber}`}

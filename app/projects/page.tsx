@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { PageHero } from "@/components/ui/page-hero"
 
 const projects = [
   {
@@ -52,17 +53,15 @@ export default function ProjectsPage() {
 
   return (
     <div className="pt-20">
-      <section className="py-32 container mx-auto px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl mb-24">
-          <span className="text-xs uppercase tracking-[0.4em] text-primary font-bold mb-6 block">ARCHITECTURE</span>
-          <h1 className="text-6xl md:text-8xl font-serif leading-tight mb-8">
-            The <span className="italic">Project</span> Gallery
-          </h1>
-          <p className="text-xl font-light text-muted-foreground leading-relaxed">
-            A showcase of global architectural excellence where Firedclay Originals surfaces define the character of
-            space.
-          </p>
-        </motion.div>
+      <PageHero
+        title="The Project Gallery"
+        subtitle="Architecture"
+        description="A showcase of global architectural excellence where Firedclay Originals surfaces define the character of space."
+        backgroundImage="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80"
+        curveColor="var(--background)"
+      />
+
+      <section className="py-24 container mx-auto px-6">
 
         <div className="flex flex-wrap gap-8 mb-20 border-b pb-8">
           {categories.map((cat) => (

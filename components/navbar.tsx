@@ -3,19 +3,22 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Search, ShoppingBag, Menu, X } from "lucide-react"
+import { Search, ShoppingBag, Menu, X, LogOut, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useCart } from "@/hooks/use-cart"
 import { AnimatePresence, motion } from "framer-motion"
+import { useAuth } from "@/contexts/AuthContext"
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const pathname = usePathname()
   const isHome = pathname === "/"
   const { items, setIsOpen: setCartOpen } = useCart()
+  const { user, logout } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,23 +60,23 @@ export function Navbar() {
         className={cn(
           "fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out",
           isHome && !isScrolled
-            ? "bg-transparent py-6"
-            : "bg-white/95 backdrop-blur-md py-3 border-b border-black/5 shadow-sm",
+            ? "bg-transparent py-4"
+            : "bg-white/95 backdrop-blur-md py-2 border-b border-black/5 shadow-sm",
         )}
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-center gap-4">
             {/* Left Navigation Links - Fixed width container */}
-            <div className="hidden lg:flex items-center space-x-6 w-[450px] justify-end">
+            <div className="hidden lg:flex items-center space-x-5 w-[420px] justify-end">
               {leftNavLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   className={cn(
                     "text-[13px] uppercase tracking-[0.15em] font-medium transition-all duration-300 relative group whitespace-nowrap",
-                    isHome && !isScrolled ? "text-white/95 hover:text-white" : "text-black/75 hover:text-black",
+                    isHome && !isScrolled ? "text-white/95 hover:text-white" : "text-black hover:text-black/70",
                   )}
-                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  style={{ fontFamily: "'Roboto', sans-serif" }}
                 >
                   {link.name}
                   <span className={cn(
@@ -95,13 +98,13 @@ export function Navbar() {
                 <div className="flex flex-col items-center min-w-[200px]">
                   <span 
                     className="text-2xl font-bold tracking-tight text-white"
-                    style={{ fontFamily: "'Inter', sans-serif", letterSpacing: '0.02em' }}
+                    style={{ fontFamily: "'Roboto', sans-serif", letterSpacing: '0.02em' }}
                   >
                     FIREDCLAY
                   </span>
                   <span 
                     className="text-[11px] font-light tracking-[0.3em] text-white/70 -mt-1"
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    style={{ fontFamily: "'Roboto', sans-serif" }}
                   >
                     ORIGINALS
                   </span>
@@ -118,16 +121,16 @@ export function Navbar() {
             </Link>
 
             {/* Right Navigation Links - Fixed width container */}
-            <div className="hidden lg:flex items-center space-x-6 w-[450px]">
+            <div className="hidden lg:flex items-center space-x-5 w-[420px]">
               {rightNavLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   className={cn(
                     "text-[13px] uppercase tracking-[0.15em] font-medium transition-all duration-300 relative group whitespace-nowrap",
-                    isHome && !isScrolled ? "text-white/95 hover:text-white" : "text-black/75 hover:text-black",
+                    isHome && !isScrolled ? "text-white/95 hover:text-white" : "text-black hover:text-black/70",
                   )}
-                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  style={{ fontFamily: "'Roboto', sans-serif" }}
                 >
                   {link.name}
                   <span className={cn(
@@ -159,7 +162,7 @@ export function Navbar() {
               >
                 <ShoppingBag size={19} />
                 {items.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-primary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                     {items.length}
                   </span>
                 )}
@@ -168,16 +171,108 @@ export function Navbar() {
                 <Button
                   variant="outline"
                   className={cn(
-                    "hidden sm:flex rounded-none uppercase text-[11px] tracking-[0.12em] font-semibold px-6 h-10 transition-all duration-300",
+                    "hidden sm:flex rounded-none uppercase text-[11px] tracking-[0.12em] font-semibold px-5 h-9 transition-all duration-300",
                     isHome && !isScrolled
                       ? "border-white/40 text-white hover:bg-white hover:text-black bg-transparent"
                       : "border-black text-black hover:bg-black hover:text-white bg-transparent",
                   )}
-                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  style={{ fontFamily: "'Roboto', sans-serif" }}
                 >
                   Order Samples
                 </Button>
               </Link>
+              {/* ── Auth area: logged-in user OR hanging Login ── */}
+              {user ? (
+                /* User is logged in → show name + dropdown */
+                <div className="relative hidden sm:flex items-center">
+                  <button
+                    onClick={() => setIsUserMenuOpen(v => !v)}
+                    className={cn(
+                      "flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] transition-all duration-300 px-3 py-2 border group",
+                      isHome && !isScrolled
+                        ? "border-white/30 text-white hover:bg-white/10"
+                        : "border-black/15 text-black hover:border-black/40"
+                    )}
+                    style={{ fontFamily: "'Roboto', sans-serif" }}
+                  >
+                    <div className={cn(
+                      "w-6 h-6 flex items-center justify-center rounded-full text-[10px] font-black",
+                      isHome && !isScrolled ? "bg-white text-black" : "bg-black text-white"
+                    )}>
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <span>{user.name.split(" ")[0]}</span>
+                  </button>
+
+                  <AnimatePresence>
+                    {isUserMenuOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                        transition={{ duration: 0.18 }}
+                        className="absolute top-full right-0 mt-2 w-48 bg-white border border-black/10 shadow-xl z-50"
+                        style={{ fontFamily: "'Roboto', sans-serif" }}
+                      >
+                        <div className="px-4 py-3 border-b border-black/8">
+                          <p className="text-[11px] font-bold text-black uppercase tracking-wider">{user.name}</p>
+                          <p className="text-[10px] text-black/40 mt-0.5">{user.phone}</p>
+                        </div>
+                        <button
+                          onClick={() => { logout(); setIsUserMenuOpen(false) }}
+                          className="w-full flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-red-600 hover:bg-red-50 transition-colors"
+                        >
+                          <LogOut size={14} />
+                          Logout
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                /* Not logged in → Hanging swing Login button */
+                <motion.div
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="hidden sm:flex relative justify-center items-end self-stretch pb-0"
+                  style={{ marginTop: "-2px" }}
+                >
+                  <motion.div
+                    animate={{ rotate: [-2.5, 2.5, -2.5] }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                    className="relative origin-top flex flex-col items-center"
+                  >
+                    <span className={cn(
+                      "block w-[2px] h-[20px] transition-colors duration-300",
+                      isHome && !isScrolled ? "bg-white/60" : "bg-red-400/60"
+                    )} />
+                    <Link href="/login">
+                      <motion.button
+                        whileHover={{ scale: 1.06 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={cn(
+                          "relative px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] border-2 flex items-center gap-2 overflow-hidden transition-all duration-500 group font-['Roboto',sans-serif]",
+                          isHome && !isScrolled
+                            ? "border-red-500 text-white"
+                            : "border-red-500 text-red-600"
+                        )}
+                      >
+                        {/* Light red hover fill */}
+                        <span className="absolute inset-0 bg-red-50 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500" />
+                        <span className={cn(
+                          "relative z-10 transition-colors duration-300",
+                          isHome && !isScrolled
+                            ? "text-white group-hover:text-red-600"
+                            : "text-red-600"
+                        )}>
+                          Login
+                        </span>
+                      </motion.button>
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              )}
               <button 
                 className="lg:hidden" 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -229,13 +324,13 @@ export function Navbar() {
                   type="text"
                   placeholder="Search for tiles, collections, projects..."
                   className="flex-1 text-2xl outline-none bg-transparent placeholder:text-black/30"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  style={{ fontFamily: "'Roboto', sans-serif" }}
                   autoFocus
                 />
               </div>
               <motion.p 
                 className="text-sm text-black/50 mt-6 uppercase tracking-wider" 
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                style={{ fontFamily: "'Roboto', sans-serif" }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.4 }}
@@ -269,7 +364,7 @@ export function Navbar() {
                 <div className="flex items-center justify-between p-6 border-b">
                   <span 
                     className="text-lg font-semibold tracking-wider uppercase"
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    style={{ fontFamily: "'Roboto', sans-serif" }}
                   >
                     Menu
                   </span>
@@ -285,21 +380,30 @@ export function Navbar() {
                         key={link.name}
                         href={link.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-base uppercase tracking-[0.12em] font-medium py-4 border-b border-black/5 hover:text-primary transition-colors"
-                        style={{ fontFamily: "'Inter', sans-serif" }}
+                        className="text-base uppercase tracking-[0.12em] font-medium py-3 border-b border-black/5 hover:text-primary transition-colors"
+                        style={{ fontFamily: "'Roboto', sans-serif" }}
                       >
                         {link.name}
                       </Link>
                     ))}
                   </div>
                   
-                  <div className="mt-8 px-6">
+                  <div className="mt-6 px-6 flex flex-col gap-3">
                     <Link href="/order-samples" onClick={() => setIsMobileMenuOpen(false)}>
                       <Button 
-                        className="w-full rounded-none uppercase text-xs tracking-[0.15em] font-semibold h-12 bg-black hover:bg-black/90"
-                        style={{ fontFamily: "'Inter', sans-serif" }}
+                        className="w-full rounded-none uppercase text-xs tracking-[0.15em] font-semibold h-11 bg-black hover:bg-black/90"
+                        style={{ fontFamily: "'Roboto', sans-serif" }}
                       >
                         Order Free Samples
+                      </Button>
+                    </Link>
+                    <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button 
+                        variant="outline"
+                        className="w-full rounded-none uppercase text-xs tracking-[0.15em] font-semibold h-11 border-black text-black hover:bg-black hover:text-white bg-transparent"
+                        style={{ fontFamily: "'Roboto', sans-serif" }}
+                      >
+                        Login
                       </Button>
                     </Link>
                   </div>
@@ -308,7 +412,7 @@ export function Navbar() {
                 <div className="p-6 border-t bg-gray-50">
                   <p 
                     className="text-xs text-black/50 uppercase tracking-wider"
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    style={{ fontFamily: "'Roboto', sans-serif" }}
                   >
                     Est. 1984 — European Craft
                   </p>

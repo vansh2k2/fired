@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useCart } from "@/hooks/use-cart"
+import { toast } from "sonner"
 import { Eye, Heart, X, ChevronLeft, ChevronRight, Download, ChevronDown } from "lucide-react"
 
 const tiles = [
@@ -190,11 +191,22 @@ export function TileGrid() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [hoveredId, setHoveredId] = useState<number | null>(null)
   const [selectedTile, setSelectedTile] = useState<number | null>(null)
+  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({})
   const [expandedColors, setExpandedColors] = useState<number | null>(null)
-  const { addItem } = useCart()
+  const { items, addItem } = useCart()
 
   const handleAddSample = (tile: typeof tiles[0], e: React.MouseEvent) => {
     e.stopPropagation()
+    const isAlreadyInCart = items.some((item) => item.id === tile.id.toString())
+
+    if (isAlreadyInCart) {
+      toast(`${tile.name} is already in your basket.`, {
+        description: "Only one sample per product is allowed.",
+        duration: 3000,
+      })
+      return
+    }
+
     addItem({
       id: tile.id.toString(),
       name: tile.name,
@@ -202,6 +214,11 @@ export function TileGrid() {
       color: tile.colors[0],
       size: tile.sizes[0],
       finish: tile.finishes[0],
+    })
+
+    toast(`${tile.name} added to your basket.`, {
+      description: "View your selections in the cart.",
+      duration: 2000,
     })
   }
 
@@ -437,16 +454,25 @@ export function TileGrid() {
                         ))}
                       </div>
 
-                      {/* Add to Sample */}
-                      <button
-                        onClick={(e) => handleAddSample(tile, e)}
-                        className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors flex items-center gap-1"
-                      >
-                        Add Sample to Basket
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </button>
+                      {/* Actions */}
+                      <div className="flex items-center gap-4">
+                        <button
+                          onClick={() => setSelectedTile(tile.id)}
+                          className="text-xs font-semibold uppercase tracking-wider text-neutral-900 hover:text-primary transition-colors flex items-center gap-1.5"
+                        >
+                          <Eye size={13} />
+                          View
+                        </button>
+                        <button
+                          onClick={(e) => handleAddSample(tile, e)}
+                          className="text-xs font-semibold uppercase tracking-wider text-neutral-600 hover:text-neutral-900 transition-colors flex items-center gap-1.5"
+                        >
+                          Add Sample to Basket
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </motion.div>

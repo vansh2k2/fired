@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Poppins } from "next/font/google"
+import { Roboto } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
@@ -9,11 +9,13 @@ import { Footer } from "@/components/footer"
 import { CartDrawer } from "@/components/cart-drawer"
 import ContactFloats from "@/components/ui/contact-floats"
 import SocialSidebar from "@/components/ui/social-sidebar"
+import { AuthProvider } from "@/contexts/AuthContext"
+import { Toaster } from "sonner"
 
-const poppins = Poppins({
+const roboto = Roboto({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "700"],
 })
 
 export const metadata: Metadata = {
@@ -72,15 +74,33 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={poppins.variable}>
+    <html lang="en" className={roboto.variable}>
       <body className="font-sans antialiased bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <CartDrawer />
-        <ContactFloats /> 
-        <SocialSidebar />
-        <Analytics />
+        <AuthProvider>
+          <Toaster 
+            position="top-center" 
+            expand={false} 
+            toastOptions={{
+              style: {
+                background: '#18181b', // zinc-900
+                color: '#ffffff',
+                border: '1px solid rgba(222, 128, 43, 0.4)', // Firedclay orange semi-transparent
+                borderRadius: '0px',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '12px',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+              },
+            }} 
+          />
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <CartDrawer />
+          <ContactFloats />
+          <SocialSidebar />
+          <Analytics />
+        </AuthProvider>
       </body>
     </html>
   )

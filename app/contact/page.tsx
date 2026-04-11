@@ -3,21 +3,22 @@
 import { motion } from "framer-motion"
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { PageHero } from "@/components/ui/page-hero"
 
 export default function ContactPage() {
   return (
     <div className="pt-20">
-      <section className="py-32 container mx-auto px-6">
+      <PageHero
+        title="Start Your Project"
+        subtitle="Get in Touch"
+        description="Whether you are an architect, designer, or homeowner, our studio is ready to assist with your technical and aesthetic requirements."
+        backgroundImage="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1600&q=80"
+        curveColor="var(--background)"
+      />
+
+      <section className="py-24 container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-            <span className="text-xs uppercase tracking-[0.4em] text-primary font-bold mb-6 block">GET IN TOUCH</span>
-            <h1 className="text-6xl md:text-7xl font-serif leading-tight mb-12">
-              Start Your <br /> <span className="italic">Project</span>
-            </h1>
-            <p className="text-xl font-light text-muted-foreground mb-16 max-w-md leading-relaxed">
-              Whether you are an architect, designer, or homeowner, our studio is ready to assist with your technical
-              and aesthetic requirements.
-            </p>
+          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
 
             <div className="space-y-12">
               <div className="flex gap-6">

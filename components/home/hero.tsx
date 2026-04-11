@@ -40,7 +40,7 @@ export function Hero() {
     const timer = setInterval(() => {
       setDirection(1)
       setCurrent((prev) => (prev + 1) % heroSlides.length)
-    }, 5000)
+    }, 6000)
     return () => clearInterval(timer)
   }, [])
 
@@ -50,131 +50,161 @@ export function Hero() {
   }
 
   const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 100 : -100,
-      opacity: 0,
-      scale: 1.1,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (direction) => ({
-      x: direction > 0 ? -100 : 100,
-      opacity: 0,
-      scale: 0.95,
-    }),
+    enter: { opacity: 0 },
+    center: { opacity: 1 },
+    exit: { opacity: 0 },
   }
 
   return (
     <section className="relative h-[90vh] md:h-screen w-full overflow-hidden bg-black">
-      <AnimatePresence initial={false} custom={direction} mode="sync">
+      <AnimatePresence initial={true}>
         <motion.div
           key={current}
-          custom={direction}
           variants={slideVariants}
           initial="enter"
           animate="center"
           exit="exit"
           transition={{
-            x: { type: "spring", stiffness: 200, damping: 30 },
-            opacity: { duration: 0.8 },
-            scale: { duration: 1.2 },
+            opacity: { duration: 1.8, ease: "easeInOut" },
           }}
           className="absolute inset-0 z-0"
         >
+          {/* Main Image with dramatic 'Teeda' (Slanted) Diagonal Pan & Zoom */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-transparent z-10"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.5 }}
-          />
-          <motion.div
-            className="absolute inset-0"
-            initial={{ scale: 1.2 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 7, ease: "easeOut" }}
+            className="absolute inset-0 origin-center scale-110"
+            initial={{ scale: 1.0, rotate: 0, x: 0, y: 0 }}
+            animate={{ 
+              scale: 1.35, 
+              rotate: 3.5, 
+              x: [0, 20, 40],
+              y: [0, -10, -20]
+            }}
+            transition={{ 
+              duration: 10, 
+              ease: [0.33, 1, 0.68, 1],
+            }}
           >
             <Image
               src={heroSlides[current].image || "/placeholder.svg"}
               alt={heroSlides[current].title}
               fill
-              className="object-cover"
+              className="object-cover brightness-[0.85]"
               priority
             />
           </motion.div>
+
+          {/* Premium Ambient Overlays */}
+          <div className="absolute inset-0 bg-black/15 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/10 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 z-10" />
+          
+          {/* Subtle Dynamic Grain Overlay */}
+          <div className="absolute inset-0 z-10 opacity-[0.03] pointer-events-none mix-blend-overlay" 
+               style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} />
         </motion.div>
       </AnimatePresence>
-
-      {/* Decorative elements */}
-      <div className="absolute top-40 right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl z-10" />
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl z-10" />
 
       <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center items-start text-left text-white">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={{
+              animate: {
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.1
+                }
+              }
+            }}
             className="max-w-3xl"
           >
+            {/* Subtitle - Emerging from Baseline */}
+            <div className="overflow-hidden mb-6">
+              <motion.div
+                variants={{
+                  initial: { y: 100, opacity: 0 },
+                  animate: { y: 0, opacity: 1 },
+                  exit: { y: 30, opacity: 0 }
+                }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-center gap-3"
+              >
+                <span className="w-12 h-[1px] bg-white/40" />
+                <span className="text-xs uppercase tracking-[0.4em] font-semibold text-white/90 flex items-center gap-2">
+                  <Sparkles size={14} className="text-white/70" />
+                  {heroSlides[current].subtitle}
+                </span>
+              </motion.div>
+            </div>
+
+            {/* Title - Powerful Rise from Bottom */}
+            <div className="overflow-hidden mb-8">
+              <motion.h1
+                variants={{
+                  initial: { y: 150, opacity: 0 },
+                  animate: { y: 0, opacity: 1 },
+                  exit: { y: 40, opacity: 0 }
+                }}
+                transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.05] tracking-tight"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+              >
+                {heroSlides[current].title}
+              </motion.h1>
+            </div>
+
+            {/* Description - Soft Fade-up */}
+            <div className="overflow-hidden mb-12">
+              <motion.p
+                variants={{
+                  initial: { y: 80, opacity: 0 },
+                  animate: { y: 0, opacity: 1 },
+                  exit: { y: 20, opacity: 0 }
+                }}
+                transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                className="text-sm md:text-lg font-light max-w-xl text-white/75 leading-relaxed tracking-wide"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+              >
+                {heroSlides[current].description}
+              </motion.p>
+            </div>
+
+            {/* Buttons - Staggered Rise */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="flex items-center gap-3 mb-6"
-            >
-              <span className="w-12 h-[1px] bg-white/40" />
-              <span className="text-xs uppercase tracking-[0.3em] font-semibold text-white/90 flex items-center gap-2">
-                <Sparkles size={14} className="text-white/70" />
-                {heroSlides[current].subtitle}
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.9 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] tracking-tight"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
-              {heroSlides[current].title}
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.9 }}
-              className="text-base md:text-lg font-light mb-12 max-w-xl text-white/85 leading-relaxed tracking-wide"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
-              {heroSlides[current].description}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.9 }}
+              variants={{
+                initial: { y: 50, opacity: 0 },
+                animate: { y: 0, opacity: 1 },
+                exit: { opacity: 0 }
+              }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col sm:flex-row gap-5"
             >
               <Link href="/collections">
-                <Button className="group relative overflow-hidden rounded-none px-12 py-7 bg-white text-black hover:bg-white transition-all duration-500 uppercase tracking-[0.25em] text-[11px] font-bold border-2 border-white">
+                <Button 
+                  className="group relative overflow-hidden rounded-none px-10 py-6 bg-white text-black hover:bg-white transition-all duration-500 uppercase tracking-[0.25em] text-[10px] font-bold border border-white"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                >
                   <span className="relative z-10 flex items-center gap-2">
                     Explore Collections
-                    <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+                    <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
                   <span className="absolute inset-0 bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                  <span className="absolute inset-0 bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left opacity-0 group-hover:opacity-100 z-0" style={{ color: 'white' }} />
+                  <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white z-20 pointer-events-none px-10 py-6">
+                     Explore Collections
+                     <ChevronRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
                 </Button>
               </Link>
 
               <Link href="/order-samples">
                 <Button
                   variant="outline"
-                  className="group relative overflow-hidden rounded-none px-12 py-7 border-2 border-white/40 text-white hover:border-white transition-all duration-500 uppercase tracking-[0.25em] text-[11px] font-bold bg-white/5 backdrop-blur-sm hover:bg-white hover:text-black"
+                  className="group relative overflow-hidden rounded-none px-10 py-6 border border-white/40 text-white hover:border-white transition-all duration-500 uppercase tracking-[0.25em] text-[10px] font-bold bg-white/5 backdrop-blur-md hover:bg-white hover:text-black"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     Order Free Samples
@@ -187,7 +217,7 @@ export function Hero() {
         </AnimatePresence>
       </div>
 
-      {/* Progress Indicators */}
+      {/* Modern Progress Dots */}
       <div className="absolute bottom-16 right-12 z-30 flex flex-col gap-6">
         {heroSlides.map((_, i) => (
           <button
@@ -203,28 +233,28 @@ export function Hero() {
             </motion.span>
             <div className="relative w-16 h-[2px] bg-white/20 overflow-hidden">
               <motion.span
-                className={cn("absolute left-0 top-0 h-full bg-white")}
+                className="absolute left-0 top-0 h-full bg-white"
                 initial={{ width: "0%" }}
                 animate={{ width: i === current ? "100%" : "0%" }}
-                transition={{ duration: i === current ? 5 : 0.5, ease: "linear" }}
+                transition={{ duration: i === current ? 6 : 0.5, ease: "linear" }}
               />
             </div>
             <span
               className={cn(
                 "ml-3 w-2 h-2 rounded-full transition-all duration-300",
-                i === current ? "bg-white scale-100" : "bg-white/30 scale-75 group-hover:bg-white/50",
+                i === current ? "bg-white scale-125 shadow-[0_0_10px_rgba(255,255,255,0.5)]" : "bg-white/30 scale-75 group-hover:bg-white/50",
               )}
             />
           </button>
         ))}
       </div>
 
-      {/* Bottom decorative line */}
+      {/* Cinematic Bottom Line */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent z-30"
+        className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent z-30"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
-        transition={{ duration: 1.5, delay: 0.5 }}
+        transition={{ duration: 2, delay: 0.5 }}
       />
     </section>
   )

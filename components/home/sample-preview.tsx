@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Heart, Eye, ExternalLink, Download, X, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
+import { toast } from "sonner"
 
 const samples = [
   { 
@@ -120,7 +121,7 @@ export function SamplePreview() {
   const [scrollPosition, setScrollPosition] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const [expandedColors, setExpandedColors] = useState<number | null>(null)
-  const { addItem } = useCart()
+  const { items, addItem } = useCart()
 
   // Infinite smooth scroll
   useEffect(() => {
@@ -153,13 +154,29 @@ export function SamplePreview() {
 
   const handleAddToBasket = (sample: typeof samples[0], e: React.MouseEvent) => {
     e.stopPropagation()
+    const isAlreadyInCart = items.some((item) => item.id === sample.id.toString())
+
+    if (isAlreadyInCart) {
+      toast(`${sample.name} is already in your basket.`, {
+        description: "Only one sample per product is allowed.",
+        duration: 3000,
+      })
+      return
+    }
+
     addItem({
       id: sample.id.toString(),
       name: sample.name,
       color: sample.colors[0],
       size: sample.size,
       image: sample.image,
-      finish: sample.finishes[0]
+      finish: sample.finishes[0],
+      quantity: 1,
+    })
+
+    toast(`${sample.name} added to your basket.`, {
+      description: "View your selections in the cart.",
+      duration: 2000,
     })
   }
 
@@ -384,13 +401,23 @@ export function SamplePreview() {
                         ))}
                       </div>
 
-                      {/* Add to Basket */}
-                      <button
-                        onClick={(e) => handleAddToBasket(sample, e)}
-                        className="w-full text-sm text-zinc-600 hover:text-zinc-900 border-b border-zinc-300 pb-1 text-left transition-colors"
-                      >
-                        Add Sample to Basket →
-                      </button>
+                      {/* Actions */}
+                      <div className="flex items-center gap-4 mt-2">
+                        <button
+                          onClick={() => setSelectedSample(sample.id)}
+                          className="text-xs font-semibold uppercase tracking-wider text-neutral-900 hover:text-primary transition-colors flex items-center gap-1.5"
+                        >
+                          <Eye size={13} />
+                          View
+                        </button>
+                        <button
+                          onClick={(e) => handleAddToBasket(sample, e)}
+                          className="text-xs font-semibold uppercase tracking-wider text-neutral-600 hover:text-neutral-900 transition-colors flex items-center gap-1.5"
+                        >
+                          Add Sample to Basket
+                          <ArrowRight size={13} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
