@@ -104,7 +104,7 @@ export function Hero() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center items-start text-left text-white">
+      <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center pt-32 pb-10 md:pt-0 md:pb-0 items-start text-left text-white">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -184,7 +184,7 @@ export function Hero() {
             >
               <Link href="/collections">
                 <Button 
-                  className="group relative overflow-hidden rounded-none px-10 py-6 bg-white text-black hover:bg-white transition-all duration-500 uppercase tracking-[0.25em] text-[10px] font-bold border border-white"
+                  className="group relative overflow-hidden rounded-none px-6 py-4 md:px-10 md:py-6 bg-white text-black hover:bg-white transition-all duration-500 uppercase tracking-[0.25em] text-[10px] font-bold border border-white"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
                   <span className="relative z-10 flex items-center gap-2">
@@ -193,7 +193,7 @@ export function Hero() {
                   </span>
                   <span className="absolute inset-0 bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                   <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white z-20 pointer-events-none px-10 py-6">
+                  <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white z-20 pointer-events-none px-6 py-4 md:px-10 md:py-6">
                      Explore Collections
                      <ChevronRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
@@ -203,7 +203,7 @@ export function Hero() {
               <Link href="/order-samples">
                 <Button
                   variant="outline"
-                  className="group relative overflow-hidden rounded-none px-10 py-6 border border-white/40 text-white hover:border-white transition-all duration-500 uppercase tracking-[0.25em] text-[10px] font-bold bg-white/5 backdrop-blur-md hover:bg-white hover:text-black"
+                  className="group relative overflow-hidden rounded-none px-6 py-4 md:px-10 md:py-6 border border-white/40 text-white hover:border-white transition-all duration-500 uppercase tracking-[0.25em] text-[10px] font-bold bg-white/5 backdrop-blur-md hover:bg-white hover:text-black"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
                   <span className="relative z-10 flex items-center gap-2">

@@ -66,14 +66,14 @@ export function Navbar() {
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-center gap-4">
-            {/* Left Navigation Links - Fixed width container */}
-            <div className="hidden lg:flex items-center space-x-5 w-[420px] justify-end">
+            {/* Left Navigation Links - Flexible container */}
+            <div className="hidden lg:flex items-center space-x-3 xl:space-x-5 flex-1 max-w-[420px] justify-end">
               {leftNavLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   className={cn(
-                    "text-[13px] uppercase tracking-[0.15em] font-medium transition-all duration-300 relative group whitespace-nowrap",
+                    "text-[11px] xl:text-[13px] uppercase tracking-[0.1em] xl:tracking-[0.15em] font-medium transition-all duration-300 relative group whitespace-nowrap",
                     isHome && !isScrolled ? "text-white/95 hover:text-white" : "text-black hover:text-black/70",
                   )}
                   style={{ fontFamily: "'Roboto', sans-serif" }}
@@ -95,39 +95,39 @@ export function Navbar() {
               )}
             >
               {isHome && !isScrolled ? (
-                <div className="flex flex-col items-center min-w-[200px]">
+                <div className="flex flex-col items-center min-w-[150px] xl:min-w-[200px]">
                   <span 
-                    className="text-2xl font-bold tracking-tight text-white"
+                    className="text-xl xl:text-2xl font-bold tracking-tight text-white"
                     style={{ fontFamily: "'Roboto', sans-serif", letterSpacing: '0.02em' }}
                   >
                     FIREDCLAY
                   </span>
                   <span 
-                    className="text-[11px] font-light tracking-[0.3em] text-white/70 -mt-1"
+                    className="text-[9px] xl:text-[11px] font-light tracking-[0.3em] text-white/70 -mt-1"
                     style={{ fontFamily: "'Roboto', sans-serif" }}
                   >
                     ORIGINALS
                   </span>
                 </div>
               ) : (
-                <div className="min-w-[200px] flex justify-center">
+                <div className="min-w-[150px] xl:min-w-[200px] flex justify-center">
                   <img 
                     src="/logo.png" 
                     alt="Firedclay Originals" 
-                    className="h-16 w-auto object-contain"
+                    className="h-12 xl:h-16 w-auto object-contain"
                   />
                 </div>
               )}
             </Link>
 
-            {/* Right Navigation Links - Fixed width container */}
-            <div className="hidden lg:flex items-center space-x-5 w-[420px]">
+            {/* Right Navigation Links - Flexible container */}
+            <div className="hidden lg:flex items-center space-x-3 xl:space-x-5 flex-1 max-w-[420px]">
               {rightNavLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   className={cn(
-                    "text-[13px] uppercase tracking-[0.15em] font-medium transition-all duration-300 relative group whitespace-nowrap",
+                    "text-[11px] xl:text-[13px] uppercase tracking-[0.1em] xl:tracking-[0.15em] font-medium transition-all duration-300 relative group whitespace-nowrap",
                     isHome && !isScrolled ? "text-white/95 hover:text-white" : "text-black hover:text-black/70",
                   )}
                   style={{ fontFamily: "'Roboto', sans-serif" }}
@@ -144,7 +144,7 @@ export function Navbar() {
             {/* Right Side Icons - Absolute positioned */}
             <div
               className={cn(
-                "flex items-center gap-4 ml-auto transition-colors duration-300",
+                "flex items-center gap-2 xl:gap-4 ml-auto transition-colors duration-300",
                 isHome && !isScrolled ? "text-white" : "text-black",
               )}
             >
@@ -171,7 +171,7 @@ export function Navbar() {
                 <Button
                   variant="outline"
                   className={cn(
-                    "hidden sm:flex rounded-none uppercase text-[11px] tracking-[0.12em] font-semibold px-5 h-9 transition-all duration-300",
+                    "hidden xl:flex rounded-none uppercase text-[11px] tracking-[0.12em] font-semibold px-5 h-9 transition-all duration-300",
                     isHome && !isScrolled
                       ? "border-white/40 text-white hover:bg-white hover:text-black bg-transparent"
                       : "border-black text-black hover:bg-black hover:text-white bg-transparent",
@@ -235,7 +235,7 @@ export function Navbar() {
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="hidden sm:flex relative justify-center items-end self-stretch pb-0"
+                  className="hidden xl:flex relative justify-center items-end self-stretch pb-0"
                   style={{ marginTop: "-2px" }}
                 >
                   <motion.div
@@ -274,7 +274,7 @@ export function Navbar() {
                 </motion.div>
               )}
               <button 
-                className="lg:hidden" 
+                className="xl:hidden flex items-center justify-center p-2" 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Menu"
               >
