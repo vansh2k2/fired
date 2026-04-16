@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { 
@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 
-export default function AccountPage() {
+function AccountContent() {
   const { user, login, logout } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -363,4 +363,18 @@ export default function AccountPage() {
       </div>
     </div>
   );
+}
+
+export default function AccountPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-[#fafafa]">
+        <div className="text-[10px] uppercase tracking-[0.3em] font-bold animate-pulse text-zinc-400">
+          Loading Your Studio...
+        </div>
+      </div>
+    }>
+      <AccountContent />
+    </Suspense>
+  )
 }
