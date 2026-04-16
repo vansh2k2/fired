@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { PageHero } from "@/components/ui/page-hero"
+import MarqueeStrip from "@/components/ui/marquee-strip"
 
 export default function ContactPage() {
   return (
@@ -15,6 +16,7 @@ export default function ContactPage() {
         backgroundImage="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1600&q=80"
         curveColor="var(--background)"
       />
+      <MarqueeStrip text="we don't charge any amount for the sample order part whatsoever • Studio Inquiries Open • Technical Support Available" />
 
       <section className="py-24 container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">

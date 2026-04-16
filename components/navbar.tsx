@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Search, ShoppingBag, Menu, X, LogOut, User } from "lucide-react"
+import { Search, ShoppingBag, Menu, X, LogOut, User, Package, Settings, CreditCard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useCart } from "@/hooks/use-cart"
@@ -218,13 +218,39 @@ export function Navbar() {
                           <p className="text-[11px] font-bold text-black uppercase tracking-wider">{user.name}</p>
                           <p className="text-[10px] text-black/40 mt-0.5">{user.phone}</p>
                         </div>
-                        <button
-                          onClick={() => { logout(); setIsUserMenuOpen(false) }}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-red-600 hover:bg-red-50 transition-colors"
-                        >
-                          <LogOut size={14} />
-                          Logout
-                        </button>
+                        <div className="py-1">
+                          <Link
+                            href="/account"
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-black hover:bg-zinc-50 transition-colors border-b border-black/5"
+                          >
+                            <User size={14} className="text-zinc-400" />
+                            View Account
+                          </Link>
+                          <Link
+                            href="/account?tab=orders"
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-black hover:bg-zinc-50 transition-colors border-b border-black/5"
+                          >
+                            <Package size={14} className="text-zinc-400" />
+                            Manage Orders
+                          </Link>
+                          <Link
+                            href="/account?tab=orders"
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-black hover:bg-zinc-50 transition-colors border-b border-black/5"
+                          >
+                            <ShoppingBag size={14} className="text-zinc-400" />
+                            Order History
+                          </Link>
+                          <button
+                            onClick={() => { logout(); setIsUserMenuOpen(false) }}
+                            className="w-full flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-red-600 hover:bg-red-50 transition-colors"
+                          >
+                            <LogOut size={14} />
+                            Logout
+                          </button>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>

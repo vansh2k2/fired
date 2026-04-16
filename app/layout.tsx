@@ -8,7 +8,6 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { CartDrawer } from "@/components/cart-drawer"
 import ContactFloats from "@/components/ui/contact-floats"
-import SocialSidebar from "@/components/ui/social-sidebar"
 import { AuthProvider } from "@/contexts/AuthContext"
 import { Toaster } from "sonner"
 
@@ -98,7 +97,6 @@ export default function RootLayout({
           <Footer />
           <CartDrawer />
           <ContactFloats />
-          <SocialSidebar />
           <Analytics />
         </AuthProvider>
       </body>

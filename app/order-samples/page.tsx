@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
+import MarqueeStrip from "@/components/ui/marquee-strip"
 
 const sampleTiles = [
   {
@@ -222,6 +223,7 @@ export default function OrderSamplesPage() {
               project moodboard.
             </motion.p>
           </header>
+          <MarqueeStrip className="mb-12" text="we don't charge any amount for the sample order part whatsoever • European Craftsmanship • Worldwide Shipping" />
 
           <div className="max-w-xs mx-auto mb-20">
             <div className="h-[2px] w-full bg-zinc-200 relative">

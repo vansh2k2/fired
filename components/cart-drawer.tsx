@@ -9,6 +9,7 @@ import Link from "next/link"
 import { useAuth } from "@/contexts/AuthContext"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import MarqueeStrip from "@/components/ui/marquee-strip"
 
 export function CartDrawer() {
   const { items, isOpen, setIsOpen, removeItem } = useCart()
@@ -46,6 +47,7 @@ export function CartDrawer() {
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-background border-l z-[101] flex flex-col"
             style={{ fontFamily: "'Roboto', sans-serif" }}
           >
+            <MarqueeStrip />
             <div className="p-8 border-b flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold tracking-tight">Sample Pack</h2>
