@@ -172,6 +172,8 @@ export default function OrderSamplesPage() {
       image: tile.image,
       color: tile.colors[0],
       size: "Specimen",
+      finish: tile.finish,
+      quantity: 1,
     })
     setIsOpen(true)
   }

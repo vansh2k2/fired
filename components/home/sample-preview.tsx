@@ -12,6 +12,7 @@ const samples = [
   { 
     id: 1,
     name: "Everscape", 
+    collection: "Porcelain",
     colors: ["#E8E4D9", "#D4CFC4", "#C2BDB2", "#B0ABA0", "#9E998E", "#8C877C"],
     allColors: ["#E8E4D9", "#D4CFC4", "#C2BDB2", "#B0ABA0", "#9E998E", "#8C877C", "#7A756A", "#686358", "#565146", "#444034"],
     colorCount: 10,
@@ -25,6 +26,7 @@ const samples = [
   { 
     id: 2,
     name: "Moda", 
+    collection: "Ceramic",
     colors: ["#1A1A1A", "#B8B8B8", "#989898", "#787878"],
     allColors: ["#1A1A1A", "#B8B8B8", "#989898", "#787878", "#585858", "#383838"],
     colorCount: 6,
@@ -38,6 +40,7 @@ const samples = [
   { 
     id: 3,
     name: "Spectre", 
+    collection: "Marble",
     colors: ["#F5F5F5", "#F0E8DC", "#E8D4C8", "#D4E8DC", "#E0E0E0"],
     allColors: ["#F5F5F5", "#F0E8DC", "#E8D4C8", "#D4E8DC", "#E0E0E0", "#C8C8C8", "#B4B4B4", "#A0A0A0"],
     colorCount: 8,
@@ -51,6 +54,7 @@ const samples = [
   { 
     id: 4,
     name: "Agra", 
+    collection: "Engineered Stone",
     colors: ["#C8C8C8", "#B4A898", "#8C9C7C", "#7C8C8C", "#1A1A1A"],
     allColors: ["#C8C8C8", "#B4A898", "#8C9C7C", "#7C8C8C", "#1A1A1A", "#989898", "#787878", "#585858", "#383838"],
     colorCount: 9,
@@ -64,6 +68,7 @@ const samples = [
   { 
     id: 5,
     name: "Enna", 
+    collection: "Ceramic",
     colors: ["#D4A898", "#8C6C5C", "#1A4A3A", "#2A5A5A", "#1A1A1A"],
     allColors: ["#D4A898", "#8C6C5C", "#1A4A3A", "#2A5A5A", "#1A1A1A"],
     colorCount: 5,
@@ -77,6 +82,7 @@ const samples = [
   { 
     id: 6,
     name: "Cassini", 
+    collection: "Porcelain",
     colors: ["#E8DCC8", "#D4C8B4", "#C8B8A0", "#B4A88C", "#A09878"],
     allColors: ["#E8DCC8", "#D4C8B4", "#C8B8A0", "#B4A88C", "#A09878", "#8C8464", "#787050"],
     colorCount: 7,
@@ -90,6 +96,7 @@ const samples = [
   { 
     id: 7,
     name: "Brix", 
+    collection: "Marble",
     colors: ["#F5F5F5", "#E8E8E8", "#D4D4D4", "#B8B8B8", "#989898"],
     allColors: ["#F5F5F5", "#E8E8E8", "#D4D4D4", "#B8B8B8", "#989898", "#787878", "#585858"],
     colorCount: 7,
@@ -103,6 +110,7 @@ const samples = [
   { 
     id: 8,
     name: "Tuscany", 
+    collection: "Engineered Stone",
     colors: ["#D4A898", "#C89878", "#B88868", "#A87858"],
     allColors: ["#D4A898", "#C89878", "#B88868", "#A87858", "#986848", "#885838"],
     colorCount: 6,
@@ -295,9 +303,12 @@ export function SamplePreview() {
                   onMouseLeave={() => setHoveredId(null)}
                 >
                   {/* Card */}
-                  <div className="bg-white border border-zinc-200 overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300">
+                  <div 
+                    className="bg-white overflow-hidden transition-all duration-300"
+                    style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px" }}
+                  >
                     {/* Image with Hover Change */}
-                    <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100 cursor-pointer mb-4">
                       {/* Default Image */}
                       <Image
                         src={sample.image}
@@ -321,33 +332,28 @@ export function SamplePreview() {
                       />
                       
                       {/* Hover Overlay with Icons */}
-                      <div className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${
+                      <div className={`absolute top-3 right-3 flex gap-2 transition-opacity duration-300 ${
                         hoveredId === sample.id ? 'opacity-100' : 'opacity-0'
                       }`}>
-                        <div className="absolute top-4 right-4 flex gap-2">
-                          <button className="p-2 bg-white rounded-full hover:bg-zinc-100 transition-colors">
-                            <Heart size={16} />
-                          </button>
-                          <button 
-                            onClick={() => setSelectedSample(sample.id)}
-                            className="p-2 bg-white rounded-full hover:bg-zinc-100 transition-colors"
-                          >
-                            <Eye size={16} />
-                          </button>
-                          <button className="p-2 bg-white rounded-full hover:bg-zinc-100 transition-colors">
-                            <ExternalLink size={16} />
-                          </button>
-                        </div>
+                        <button className="p-2 bg-white rounded-full hover:bg-neutral-100 transition-colors shadow-md">
+                          <Heart size={14} />
+                        </button>
+                        <button 
+                          onClick={() => setSelectedSample(sample.id)}
+                          className="p-2 bg-white rounded-full hover:bg-neutral-100 transition-colors shadow-md"
+                        >
+                          <Eye size={14} />
+                        </button>
                       </div>
                     </div>
 
                     {/* Card Content */}
-                    <div className="p-4">
+                    <div className="p-5 pt-0">
                       {/* Title */}
-                      <h3 className="text-base font-semibold mb-3">{sample.name}</h3>
+                      <h3 className="text-lg font-medium mb-1 text-neutral-900">{sample.name}</h3>
 
                       {/* Specifications */}
-                      <div className="flex items-center gap-4 text-xs text-zinc-600 mb-3 flex-wrap">
+                      <div className="flex items-center gap-3 text-xs text-neutral-600 mb-3">
                         <span className="flex items-center gap-1">
                           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
@@ -374,14 +380,14 @@ export function SamplePreview() {
                           {(expandedColors === sample.id ? sample.allColors : sample.colors).map((color, idx) => (
                             <div
                               key={idx}
-                              className="w-6 h-6 rounded-full border border-zinc-300"
+                              className="w-5 h-5 rounded-full border border-neutral-300"
                               style={{ backgroundColor: color }}
                             />
                           ))}
                           {sample.colorCount > sample.colors.length && (
                             <button
                               onClick={() => setExpandedColors(expandedColors === sample.id ? null : sample.id)}
-                              className="text-xs text-zinc-600 hover:text-zinc-900 ml-1 font-semibold"
+                              className="text-xs text-neutral-600 hover:text-neutral-900 ml-1 font-semibold"
                             >
                               {expandedColors === sample.id ? '−' : `+${sample.colorCount - sample.colors.length}`}
                             </button>
@@ -390,11 +396,11 @@ export function SamplePreview() {
                       </div>
 
                       {/* Finishes */}
-                      <div className="flex gap-2 mb-4 flex-wrap">
+                      <div className="flex gap-2 mb-3 flex-wrap">
                         {sample.finishes.map((finish, idx) => (
                           <span
                             key={idx}
-                            className="px-3 py-1 border border-zinc-300 text-[10px] uppercase tracking-wider"
+                            className="px-3 py-1 border border-neutral-300 text-[10px] uppercase tracking-wider"
                           >
                             {finish}
                           </span>
@@ -402,7 +408,7 @@ export function SamplePreview() {
                       </div>
 
                       {/* Actions */}
-                      <div className="flex items-center gap-4 mt-2">
+                      <div className="flex items-center gap-4">
                         <button
                           onClick={() => setSelectedSample(sample.id)}
                           className="text-xs font-semibold uppercase tracking-wider text-neutral-900 hover:text-primary transition-colors flex items-center gap-1.5"
@@ -415,7 +421,9 @@ export function SamplePreview() {
                           className="text-xs font-semibold uppercase tracking-wider text-neutral-600 hover:text-neutral-900 transition-colors flex items-center gap-1.5"
                         >
                           Add Sample to Basket
-                          <ArrowRight size={13} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
                         </button>
                       </div>
                     </div>
@@ -427,7 +435,7 @@ export function SamplePreview() {
         </div>
       </section>
 
-      {/* Modal */}
+      {/* Modal - Smaller Size */}
       <AnimatePresence>
         {selectedSample !== null && selectedSampleData && (
           <motion.div
@@ -440,110 +448,148 @@ export function SamplePreview() {
             {/* Close Button */}
             <button
               onClick={() => setSelectedSample(null)}
-              className="absolute top-4 right-4 z-50 p-2 text-white hover:bg-white/20 rounded-full transition-colors"
+              className="absolute top-6 right-6 z-50 p-2 text-neutral-800 bg-white hover:bg-neutral-100 transition-colors"
               aria-label="Close"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
-
+ 
             {/* Navigation */}
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 handleModalPrevious()
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+              className="absolute left-6 top-1/2 -translate-y-1/2 z-50 p-2.5 bg-white hover:bg-neutral-100 transition-colors"
               aria-label="Previous"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
-
+ 
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 handleModalNext()
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+              className="absolute right-6 top-1/2 -translate-y-1/2 z-50 p-2.5 bg-white hover:bg-neutral-100 transition-colors"
               aria-label="Next"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5" />
             </button>
-
-            {/* Modal Content */}
+ 
+            {/* Modal Content - Reduced Size */}
             <motion.div
-              initial={{ scale: 0.9 }}
+              initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              className="relative max-w-5xl w-full bg-white"
+              exit={{ scale: 0.95 }}
+              className="relative max-w-4xl w-full bg-white max-h-[85vh] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="grid md:grid-cols-2">
-                {/* Image */}
-                <div className="relative aspect-square bg-zinc-100">
-                  <Image
-                    src={selectedSampleData.image}
-                    alt={selectedSampleData.name}
-                    fill
-                    className="object-cover"
-                  />
+              <div className="grid md:grid-cols-5">
+                {/* Image - Takes 3 columns */}
+                <div className="relative aspect-square bg-neutral-100 md:col-span-3">
+                  <Image src={selectedSampleData.image} alt={selectedSampleData.name} fill className="object-cover" />
+ 
+                  {/* Navigation Dots at Bottom */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); handleModalPrevious(); }}
+                      className="w-10 h-10 bg-white hover:bg-neutral-100 flex items-center justify-center shadow-md transition-colors"
+                    >
+                      <ChevronLeft size={18} />
+                    </button>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); handleModalNext(); }}
+                      className="w-10 h-10 bg-white hover:bg-neutral-100 flex items-center justify-center shadow-md transition-colors"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
+                  </div>
                 </div>
-
-                {/* Details */}
-                <div className="p-8 flex flex-col">
-                  <h3 className="text-2xl font-bold mb-1">{selectedSampleData.name}</h3>
-                  <p className="text-sm text-zinc-600 mb-6">Porcelain Tiles</p>
-
-                  <div className="space-y-4 mb-6">
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs text-zinc-500 w-20">Size</span>
-                      <span className="text-sm">{selectedSampleData.size}</span>
+ 
+                {/* Details - Takes 2 columns */}
+                <div className="p-6 flex flex-col md:col-span-2 overflow-y-auto max-h-[85vh]">
+                  <h3 className="text-xl font-medium mb-1">{selectedSampleData.name}</h3>
+                  <p className="text-xs text-neutral-600 mb-5">{selectedSampleData.collection} Tiles</p>
+ 
+                  <div className="space-y-3 mb-5">
+                    <div className="flex items-center gap-2 text-xs text-neutral-600">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                      </svg>
+                      <span>{selectedSampleData.size}</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs text-zinc-500 w-20">Colours</span>
-                      <div className="flex gap-1 flex-wrap">
-                        {selectedSampleData.allColors.map((color, idx) => (
-                          <div
-                            key={idx}
-                            className="w-5 h-5 rounded-full border border-zinc-300"
-                            style={{ backgroundColor: color }}
-                          />
-                        ))}
-                      </div>
+ 
+                    <div className="flex items-center gap-2 text-xs text-neutral-600">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                      </svg>
+                      <span>{selectedSampleData.colorCount} Colours</span>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-xs text-zinc-500 w-20">Finishes</span>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedSampleData.finishes.map((finish, idx) => (
-                          <span
-                            key={idx}
-                            className="px-3 py-1 bg-zinc-900 text-white text-xs uppercase"
-                          >
-                            {finish}
-                          </span>
-                        ))}
-                      </div>
+ 
+                    <div className="flex items-center gap-2 text-xs text-neutral-600">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{selectedSampleData.finishCount} Finish{selectedSampleData.finishCount > 1 ? "es" : ""}</span>
                     </div>
                   </div>
-
-                  <p className="text-sm text-zinc-600 mb-6">{selectedSampleData.description}</p>
-
-                  <div className="mt-auto space-y-3">
-                    <Button 
+ 
+                  {/* Order Samples Section */}
+                  <div className="mb-5">
+                    <h4 className="font-medium mb-3 text-sm">Order Samples</h4>
+                    <div className="grid grid-cols-4 gap-1.5 max-h-32 overflow-y-auto">
+                      {selectedSampleData.allColors.map((color, idx) => (
+                        <button
+                          key={idx}
+                          className="relative aspect-square border border-neutral-300 hover:border-neutral-900 transition-colors"
+                          style={{ backgroundColor: color }}
+                        >
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/10 transition-colors">
+                            <Download size={12} className="text-white opacity-0 hover:opacity-100" />
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+ 
+                  {/* Finishes */}
+                  <div className="mb-5">
+                    <h4 className="font-medium mb-2 text-xs">Finishes</h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {selectedSampleData.finishes.map((finish, idx) => (
+                        <button key={idx} className="px-3 py-1.5 border border-neutral-300 text-xs hover:bg-neutral-100 transition-colors">
+                          {finish}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+ 
+                  <div className="mt-auto space-y-2.5">
+                    <Button
                       onClick={(e) => {
                         handleAddToBasket(selectedSampleData, e)
                         setSelectedSample(null)
                       }}
-                      className="w-full bg-zinc-900 hover:bg-zinc-700 text-white py-6 rounded-none"
+                      className="w-full bg-neutral-700 hover:bg-neutral-900 text-white py-5 rounded-none flex items-center justify-center gap-2 text-sm"
                     >
-                      Order Samples →
+                      Order Samples
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </Button>
-                    <div className="grid grid-cols-2 gap-2">
-                      <Button variant="outline" className="rounded-none">
-                        <Download size={14} className="mr-2" />
+ 
+                    <p className="text-[10px] text-neutral-600 text-center leading-relaxed">
+                      UK Stocked samples are available with <strong>free next day delivery</strong> when orders are placed before 12pm.
+                    </p>
+ 
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <Button variant="outline" className="rounded-none text-[10px] py-2">
+                        <Download size={10} className="mr-1.5" />
                         Download Image
                       </Button>
-                      <Button variant="outline" className="rounded-none">
-                        <Download size={14} className="mr-2" />
+                      <Button variant="outline" className="rounded-none text-[10px] py-2">
+                        <Download size={10} className="mr-1.5" />
                         Download Brochure
                       </Button>
                     </div>

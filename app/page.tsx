@@ -14,7 +14,7 @@ export default function HomePage() {
       <FeaturedCollections />
       <AboutPreview />
       <MarqueeSection />
-      <CollectionsInDevelopment />
+      {/* <CollectionsInDevelopment /> */}
       
     
       <ProcessSection />

@@ -44,12 +44,12 @@ export function Navbar() {
   const leftNavLinks = [
     { name: "Home", href: "/" },
     { name: "Collections", href: "/collections" },
-    { name: "Projects", href: "/projects" },
-    { name: "Departments", href: "/departments" },
+    // { name: "Projects", href: "/projects" },
+    // { name: "Departments", href: "/departments" },
   ]
 
   const rightNavLinks = [
-    { name: "Company", href: "/company" },
+    // { name: "Company", href: "/company" },
     { name: "Downloads", href: "/downloads" },
     { name: "Contact", href: "/contact" },
   ]
@@ -65,9 +65,9 @@ export function Navbar() {
         )}
       >
         <div className="container mx-auto px-6">
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-4 lg:-ml-24">
             {/* Left Navigation Links - Flexible container */}
-            <div className="hidden lg:flex items-center space-x-3 xl:space-x-5 flex-1 max-w-[420px] justify-end">
+            <div className="hidden lg:flex items-center space-x-4 xl:space-x-7 flex-1 max-w-[380px] justify-end">
               {leftNavLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -95,7 +95,7 @@ export function Navbar() {
               )}
             >
               {isHome && !isScrolled ? (
-                <div className="flex flex-col items-center min-w-[150px] xl:min-w-[200px]">
+                <div className="flex flex-col items-center min-w-[120px] xl:min-w-[160px]">
                   <span 
                     className="text-xl xl:text-2xl font-bold tracking-tight text-white"
                     style={{ fontFamily: "'Roboto', sans-serif", letterSpacing: '0.02em' }}
@@ -110,7 +110,7 @@ export function Navbar() {
                   </span>
                 </div>
               ) : (
-                <div className="min-w-[150px] xl:min-w-[200px] flex justify-center">
+                <div className="min-w-[120px] xl:min-w-[160px] flex justify-center">
                   <img 
                     src="/logo.png" 
                     alt="Firedclay Originals" 
@@ -121,7 +121,7 @@ export function Navbar() {
             </Link>
 
             {/* Right Navigation Links - Flexible container */}
-            <div className="hidden lg:flex items-center space-x-3 xl:space-x-5 flex-1 max-w-[420px]">
+            <div className="hidden lg:flex items-center space-x-4 xl:space-x-7 flex-1 max-w-[380px]">
               {rightNavLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -141,10 +141,10 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* Right Side Icons - Absolute positioned */}
+            {/* Right Side Icons - Positioned to the right */}
             <div
               className={cn(
-                "flex items-center gap-2 xl:gap-4 ml-auto transition-colors duration-300",
+                "flex items-center gap-4 xl:gap-6 ml-auto lg:absolute lg:right-6 lg:top-1/2 lg:-translate-y-1/2 transition-colors duration-300",
                 isHome && !isScrolled ? "text-white" : "text-black",
               )}
             >

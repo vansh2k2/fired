@@ -214,6 +214,7 @@ export function TileGrid() {
       color: tile.colors[0],
       size: tile.sizes[0],
       finish: tile.finishes[0],
+      quantity: 1,
     })
 
     toast(`${tile.name} added to your basket.`, {
@@ -340,7 +341,10 @@ export function TileGrid() {
                   className="group"
                 >
                   {/* Card */}
-                  <div className="bg-white overflow-hidden">
+                  <div 
+                    className="bg-white overflow-hidden transition-all duration-300"
+                    style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px" }}
+                  >
                     {/* Image */}
                     <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100 cursor-pointer mb-4">
                       <Image
@@ -381,7 +385,7 @@ export function TileGrid() {
                     </div>
 
                     {/* Content */}
-                    <div>
+                    <div className="p-5 pt-0">
                       <h3 className="text-lg font-medium mb-1 text-neutral-900">{tile.name}</h3>
 
                       {/* Specifications */}

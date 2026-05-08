@@ -9,6 +9,7 @@ export interface CartItem {
   image: string
   color: string
   size: string
+  finish?: string
   quantity: number
 }
 

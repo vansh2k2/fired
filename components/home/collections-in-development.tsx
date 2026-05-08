@@ -109,6 +109,9 @@ export function CollectionsInDevelopment() {
 
   const visibleCollections = collections.slice(currentIndex, currentIndex + itemsToShow)
 
+  return null;
+
+  /*
   return (
     <section
       className="cid-section py-20 relative overflow-hidden"
@@ -116,7 +119,6 @@ export function CollectionsInDevelopment() {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Subtle background texture matching Featured Collections */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
@@ -125,8 +127,6 @@ export function CollectionsInDevelopment() {
         }}
       />
         <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
-
-          {/* ── Header ── */}
           <motion.div
             className="mb-12"
             initial={{ opacity: 0, y: -20 }}
@@ -181,7 +181,6 @@ export function CollectionsInDevelopment() {
                 </p>
               </div>
 
-              {/* Desktop nav arrows */}
               <div className="hidden lg:flex items-center gap-3 pb-1">
                 <button
                   onClick={handlePrev}
@@ -193,7 +192,6 @@ export function CollectionsInDevelopment() {
                 <button
                   onClick={handleNext}
                   className="group flex items-center justify-center w-11 h-11 border border-zinc-900 bg-zinc-900 transition-all duration-300"
-                  style={{}}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#DE802B'; (e.currentTarget as HTMLElement).style.borderColor = '#DE802B' }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#171717'; (e.currentTarget as HTMLElement).style.borderColor = '#171717' }}
                   aria-label="Next"
@@ -209,7 +207,6 @@ export function CollectionsInDevelopment() {
             <div className="mt-8 w-full h-px bg-zinc-200" />
           </motion.div>
 
-          {/* ── Cards Grid ── */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
             <AnimatePresence mode="popLayout">
               {visibleCollections.map((collection, index) => (
@@ -227,10 +224,7 @@ export function CollectionsInDevelopment() {
                   onMouseEnter={() => setHoveredId(collection.id)}
                   onMouseLeave={() => setHoveredId(null)}
                 >
-                  {/* White card */}
                   <div className="bg-white shadow-sm group-hover:shadow-lg transition-all duration-400 overflow-hidden">
-
-                    {/* Square image */}
                     <div className="relative aspect-square overflow-hidden bg-zinc-100">
                       <Image
                         src={collection.defaultImage}
@@ -251,14 +245,12 @@ export function CollectionsInDevelopment() {
                         sizes="(max-width: 768px) 50vw, 25vw"
                       />
 
-                      {/* Material tag — top left */}
                       <div className="absolute top-3 left-3 z-10">
                         <span className="text-[7px] uppercase tracking-[0.3em] text-white font-semibold bg-zinc-900/75 px-2 py-1 backdrop-blur-sm">
                           {collection.tag}
                         </span>
                       </div>
 
-                      {/* Orange bottom bar on hover */}
                       <div
                         className="absolute bottom-0 left-0 h-[3px] transition-all duration-500"
                         style={{
@@ -268,9 +260,7 @@ export function CollectionsInDevelopment() {
                       />
                     </div>
 
-                    {/* Text content */}
                     <div className="px-4 pt-3.5 pb-4">
-                      {/* Origin + index row */}
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[8px] uppercase tracking-[0.35em] font-bold" style={{ color: '#DE802B' }}>
                           {collection.origin}
@@ -280,20 +270,16 @@ export function CollectionsInDevelopment() {
                         </span>
                       </div>
 
-                      {/* Name */}
                       <h3 className="text-sm md:text-base font-bold text-zinc-900 tracking-tight leading-snug mb-2">
                         {collection.name}
                       </h3>
 
-                      {/* Orange accent line */}
                       <div className="w-6 h-px mb-2" style={{ background: '#DE802B' }} />
 
-                      {/* Description */}
                       <p className="text-[11px] text-zinc-500 font-light leading-relaxed">
                         {collection.description}
                       </p>
 
-                      {/* Footer row — Preview only on hover */}
                       <div className="flex items-center justify-end mt-3.5 pt-3 border-t border-zinc-100">
                         <div
                           className={`flex items-center gap-1 transition-all duration-300 ${
@@ -311,9 +297,7 @@ export function CollectionsInDevelopment() {
             </AnimatePresence>
           </div>
 
-          {/* ── Pagination ── */}
           <div className="flex items-center justify-between mt-10">
-            {/* Mobile nav */}
             <div className="flex lg:hidden items-center gap-2">
               <button
                 onClick={handlePrev}
@@ -329,7 +313,6 @@ export function CollectionsInDevelopment() {
               </button>
             </div>
 
-            {/* Progress bars */}
             <div className="flex items-center gap-1.5 lg:mx-auto">
               {Array.from({ length: maxIndex + 1 }).map((_, i) => (
                 <button
@@ -344,12 +327,12 @@ export function CollectionsInDevelopment() {
               ))}
             </div>
 
-            {/* Mobile counter */}
             <span className="flex lg:hidden text-[10px] uppercase tracking-[0.3em] text-zinc-400 tabular-nums">
               {String(currentIndex + 1).padStart(2, '0')} / {String(maxIndex + 1).padStart(2, '0')}
             </span>
           </div>
         </div>
-      </section>
-    )
-  }
+    </section>
+  )
+  */
+}
